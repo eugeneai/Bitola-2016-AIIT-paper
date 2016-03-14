@@ -1,5 +1,7 @@
 This archive contains the necessary files to help typesetting papers for the and Solutions in ICT (ERSICT) journal with LaTeX:
 
+www.aiitconference.org (The site of the conference)
+
 ersict.cls         - ERSICT document class
 ersict-typeinst.dvi - author instructions in dvi format
 ersict-typeinst.pdf - author instructions in pdf format
