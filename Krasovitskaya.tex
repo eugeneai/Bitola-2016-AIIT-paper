@@ -1,0 +1,232 @@
+\documentclass[runningheads]{AIIT}
+
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\definecolor{rclr}{rgb}{0.5,0.1,0.1}
+\definecolor{eclr}{rgb}{0,0.5,0.5}
+\colorlet{acolor}{blue}
+\colorlet{rcolor}{red}
+\definecolor{ncolor}{rgb}{0.5,0.5,0.1}
+\newcommand{\aaa}[2][acolor]{\noindent\textcolor{eclr}%
+{+\ [}\textcolor{#1}{#2}\textcolor{eclr}{]}}
+\newcommand{\rrr}[2][rcolor]{\noindent%
+\textcolor{eclr}{-\ [}\textcolor{#1}{#2}\textcolor{eclr}{]}}
+\newcommand{\nnn}[2][ncolor]{\noindent%
+\textcolor{eclr}{!\ [}\textcolor{#1}{#2}\textcolor{eclr}{]}}
+
+\usepackage{hyperref}
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=true,           % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={FitH},    % fits the width of the page to the window
+    pdftitle={Expert System for Structural Analysis\\ of Electrocardiogramms},    % title
+    pdfauthor={Kristina Krasovitskaya, Evgeny Cherkashin},     % author
+    pdfsubject={Electro cardio signal processing and recognition},   % subject of the document
+    pdfcreator={EMACS-24.5:AuCTeX-0.89},   % creator of the document
+    pdfproducer={PdfLaTeX}, % producer of the document
+    pdfkeywords={Искусственный интеллект} {Логическое
+      программирование} {Планирование действий} {Удовлетворение
+      ограничений} {Компьютерная алгебра} {Принцип максимума} {Оптимальное управление}, % list of keywords
+    pdfnewwindow=true,      % links in new window
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=black,          % color of internal links (black)
+    citecolor=black,        % color of links to bibliography
+    filecolor=black,      % color of file links
+    urlcolor=black           % color of external links
+}
+
+
+%% Necessary definitions for the running heads
+\def\journalissue{International Conference on Applied Internet and Information Technologies, 2016}
+\def\paperidnum{DOI: N/A}
+\setcounter{page}{1}
+
+\title{Expert System for Structural Analysis\\ of Electrocardiogramms}
+
+%% Use this if the title is too long for the running heads
+\titlerunning{Expert System for ECS}
+
+\author{Kristina Krasovitskaya\inst{1} \and Evgeny Cherkashin\inst{2}}
+
+%% Use this the list of authors is too long for the running heads
+%\authorrunning{First Author et al.}
+
+\institute{National Research Irkutsk State Technical University,\\
+Lermontov str. 83, Irkutsk, Russian Federation\\
+  \email{author1@institute.org}
+  \and
+Institute of System Dynamics and Control Theory at Siberian Branch of Russian Academy of Sciences,\\
+Lermontov str. 134, Irkutsk, Russian Federation\\
+  \email{eugeneai@icc.ru}}
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+The paper deals with process of a cardiological expert system development. A definition of a electrocardiogram is presented. Problems of ECG characteristics determination such as ECG data digitizing is considered. A problem of QRS complex recognition and P and T waves parameters measurement is discussed. A general outline of analysis technique for ECG using wavelet transformation are proposed.
+
+\vspace{6pt}\textbf{Keywords:} keyword1, keyword2.
+\end{abstract}
+
+\section{Introduction}
+
+Medical images are popular objects of automatic analysis.  An image of a cardiogram contains time series of a cardiosignals, which are processed simultaneously and synchronous.  Manual static analysis contains a number of stages \nnn{like \dots}.  The signal processing software delivered with a cardiological diagnosis is intended for experienced users and tightly bound to the appliance version, resulting to impossibility to make a comparative analysis of elecro cardiograms of the same patient obtained in different medical centers and time moments.  This, in turn, requires additional observations to be carried on the patient to obtain the time series in the \nnn{needed} format, increasing the cost of the patient residence in the diagnostic center.  Also, Russia has regions where the specialized professional cardiological treatment is not possible, this can produce complications due to, e.g., delays.
+
+Ministry of Health of Russian Federation started to elaborate of a law project aimed at a legal basis construction of IT infrastructure for public health protection.  The infrastructure will be based on remote interaction of medical professionals and patients.  At present the interaction (such as remote consultations) is out of professional moderation and provided via forums, specialized internet sites and Skype.  The cardiological data is supplied as attached photographic as scanned images.  The conclusion decision made in the environment are of question.
+
+The automatic processing and analysis of the ECG will reduce human factor impact to resulting conclusion decision, since automatic processing results are not affected by the degree of fatigue, observation time, and body physical condition.  Moreover the results produced by human expert are usually intuitive, expressed in quality statements, and the reasoning process is hardly expressed as explicit elementary stages (algorithmic).  For example, the expert estimates the width of PQ interval to be shorter as compares to described in the literature, in addition the estimation varies among specialists.  Computer processing and analysis is significantly formalized and operates by qualitative values.
+
+
+
+
+Уже более пятнадцати лет в сфере компьютерной обработки электрокардиосигнала проводятся исследования, но, как правило, каждый из методов обладает рядом недостатков, которые не позволяют осуществить его полноценное внедрение. Система «Валента» анализирует сигналы ЭКГ, однако ввести в неё данные с оборудования другой фирмы или же снятые другими аппаратами оцифрованные ленты возможности нет. Системы мониторного контроля, например, система контроля аритмий Argus, так же требуют наличия специального оборудования. Профессором д.м.н. В.М.Успенским предложен новый метод диагностики, позволяющий диагностировать широкий спектр заболеваний внутренних органов по ЭКГ.  Но и в этом случае алгоритм не охватывает существенную часть заболеваний сердца, основным проявлением которых являются аритмии. Только за последние три года процент страдающих аритмиями составил 8% . Ни одна из рассмотренных систем не обрабатывает бумажные электрокардиограммы, хотя сегодня этот вид носителя электрокардиоинформации остается самым популярным. Оцифровка лент ЭКГ так же позволяет сохранить важные диагностические данные в истории болезни и архиве пациента.
+
+In this investigation we develop an IT technique and software, which will process and analyze ECG raster images obtained in cardiologist's offices, from medical organizations and medical histories.
+
+
+\section{Structire of ECG}
+\label{sec:structire-ecg}
+
+\emph{Electrocardiogram} (ECG) is a graphical representation (a time series records) of impulse conduction on the nodes and bundles of the electrical conduction system of the heart.  The impulse conduction is recorded as a number of \emph{electrical entities} \cite{wikipedia} (\emph{pikes} made of rising and drooping, and \emph{horizontal segments}).  Pike entities are denoted by letters P, Q, R, S and T, whereas horizontal segments are denoted by PR segment and ST segment.
+
+Each ECG analysis is started from verification of used registration process.  The registration of hearth electric field potential, named as \emph{lead}, is measured between two placements of the chest surface.  The standard ECG consists of twelve leads (vectors).
+
+\begin{figure}[htb]
+  \centering
+
+  \caption{Standard twelve-lead ECG}
+  \label{fig:leads-ex}
+\end{figure}
+
+\section{Image processing}
+\label{sec:image-processing}
+
+\subsection{Digitizing (recognition)}
+\label{sec:digit-recogn}
+
+# Time series digitizing
+
+Для обработки медицинских изображений разработано множество методов. Казалось бы, разумно к электрокардиограмме применить какой-либо метод выделения края. Мы провели серию экспериментов, однако ни один из разработанных фильтров не дал эффективных результатов (рис. 2)
+
+
+\begin{figure}[htb]
+  \centering
+
+  \caption{Sobel filter processing (inversed)}
+  \label{fig:sobel-ex}
+\end{figure}
+
+Тогда было принято решение изменить подход. Изображение – это сигнал, который получается из суммы полезного сигнала и шума[1]. Исходя из этого определения, реализован следующий алгоритм.
+\begin{enumerate}
+\item Из исходного изображения выделяется канал, соответствующий
+  цвету фона.
+\item Копия изображения в красном канале размывается с
+  помощью Гауссовского фильтра.
+\item Бинарное изображение временного
+  ряда получается в результате применения формулы
+  $s(n)=f(n)+\sigma e(n)$, где $f(n)$ – полезный сигнал, $\sigma$ –
+  noise level, $e(n)$ – гауссов белый шум, $s(n)$ is the original
+  signal.  К изображению так же применяется пороговое преобразование.
+\item Считывание сигнала происходит путем цикличной обработки столбцов
+  получившегося массива.
+\end{enumerate}
+Полученный вариант алгоритма не давал требуемый результат на всех тестовых данных. Из 156 обработанных кардиограмм 10 распознавались не полностью. Анализ показал, что на результат влияет параметр функции порогового преобразования. Для настройки параметров этой функции использована методика машинного обучения, где в качестве вектора признаков выступали цветовые и яркостные характеристики каждого столбца изображения.
+
+
+\begin{figure}[htb]
+  \centering
+
+  \caption{Time series recognition algorithm stages}
+  \label{fig:leads-ex}
+\end{figure}
+
+\subsection{Cleaning artefacts}
+\label{sec:cleaning-artefacts}
+
+Как во время снятия ЭКГ, так и во время её оцифровки на полученном сигнале могут возникнуть артефакты. Примерами таких артефактов выступают дрейф изолинии и сетевая наводка. Дрейф изолинии относится к низкочастотным артефактам и образуются, как правило, в результате сильных движений, поляризацией электродов, погрешности аппарата или из-за плохого контакта с кожей. Для устранения низкочастотных помех такого рода рекомендуется использовать фильтр Баттерворта, заданный в дискретной частотной области как
+
+$$
+|H(k)|^2=\frac{1}{1+(k/k_c)^{2N}},
+$$
+где $H$ – частотная характеристика аналогового фильтра, $k_c$  – частота среза (рад/с), $k$ – аналоговая частота в радианах.
+Сетевая наводка обычно имеет частоту в 50 или 60 Гц. Данный артефакт устраняется путем применения режекторных и гребенчатых фильтров.
+Выбор фильтров основывался на эмпирическом опыте и рекомендациях в литературе.
+
+Синхронное устранение или усреднение по ансамблю используется, когда доступно много копий ЭКС. Шум является стационарным случайным процессом, а сам сигнал (квази-) периодический или циклически-стационарный. Фильтр скользящего среднего во временной области можно применять к статистически стационарным низкочастотным сигналам. Данный метод обеспечивает быструю фильтрацию в масштабах реального времени. Если же фильтрация в реальном масштабе времени не требуется, то используют фильтрацию в частотной области. Если есть информация по спектральной мощности или автокорреляционной функции сигнала и шума, то применяют оптимальный фильтр Винера. Если же шум некоррелирован с сигналом, помеха имеет нестационарный (и порой неслучайный) характер, дополнительной информации нет, но зато есть запись сигнала со второго источника, то используется адаптивная фильтрация.
+
+\section{ECG entities recognition}
+\label{sec:ecg-etit-recogn}
+
+\subsection{QRS complex detection}
+\label{sec:qrs-compl-detect}
+
+Все изученные авторами методы обнаружения QRS-комплекса основываются на поиске пика R и последующем удалении комплекса с копии ЭКС для последующего исследования. В исследовании рассмотрены методы, основанные на производной [2], на фильтре скользящего среднего, взвешенном и возведенном в квадрат операторе первой производной [3], алгоритм обнаружения QRS-комплекса Пана-Томпкинса [4]. Для комплексного подхода к обнаружению PQRST рассматривались алгоритмы, основывающиеся на дискретном вейвлет-преобразовании[5, 6], на преобразованиях «по длительности» [7].
+Мы остановились на методе с дискретным вейвлет-преобразованием, так как он находит пики даже на сигнале с дрейфом изолинии.
+Ранее распознанный сигнал загружается из файла. Проводится вейвлет-декомпозиция четвертого уровня (рис. 4), исходный сигнал раскладывается вейвлетом Добеши.
+
+
+\begin{figure}[htb]
+  \centering
+
+  \caption{Low frequencies decomposition}
+  \label{fig:decomp}
+\end{figure}
+
+Рисунок 4. График детализирующих коэффициентов.
+Извлекаются коэффициенты разложения, строится их график и анализируется оператором. Выбирается наиболее похожий на исходный сигнал коэффициент, но при этом уже очищенный от шумов. Ищутся все значения, превышающие 60% от максимума в выбранном уровне (рис.5).
+
+Рисунок 5. Поиск R-зубцов на декомпозированном сигнале.
+Поскольку в этот массив могут попасть соседние значения, то производится фильтрация слишком близких пиков. Компенсируется ошибка смещения относительно исходного сигнала. На основе обнаруженных позиций ищутся остальные пики. (рис. 6, 7).
+
+Рисунок 6. Поиск зубцов на ЭКГ с дрейфом изолинии
+
+Рисунок 7. Поиск зубцов на недекомпозированном сигнале
+ Во время  наблюдения  первичных манифестаций нежелательных побочных реакций на многомесячную противотуберкулезную химиотерапию у пациентов с коморбидной сердечнососудистой патологией был проведён сравнительный анализ динамических электрокардиографических изменений в виде различных аритмий и нарушений проводимости: ритм из правого предсердия – 18 случаев, атриовентрикулярная блокада I ст. – 7, полная блокада левой ножки пучка Гиса – 2, синдром Бругада – 7, синдром слабости синусового узла – 1, миграция водителя ритма по предсердиям – 2, фибрилляция предсердий – 10, удлинение интервала Q –T – 1, укорочение интервала P-Q – синдром  преждевременного возбуждения желудочков сердца Клерка– Леви– Кристеско (CLC) – 12, фатальный синдром  преждевременного возбуждения желудочков  Вольфа-Паркинсона-Вайта (WPW), тип «Б» – 1, острый инфаркт миокарда с формированием патологического зубца Q – 3, острый инфаркт миокарда без зубца Q (-) но с подъёмом сегмента S-T – 3, синусовая тахикардия – 4, изолированный синдром ранней реполяризации желудочков  – 4 пациента.
+Всем 78 больным на фоне начатой с момента поступления в стационар химиотерапии противотуберкулезными препаратами с учётом безопасности лекарственных взаимодействий назначены: внутримитохондриальный цитопротектор – мексидол инфузионно 1000 мг/сутки до 15 дней, амиодарон от 400 до 800 мг/сутки – для 10 до 10 дней, пропафенон от 450 до 900 мг/сутки – для 14 до 30 дней, бисопролол от 5 до 10 мг/сутки – для 12 до 30 дней, метопролола сукцинат от 25 до 50 мг/сутки  – для 28 до 30 дней, ивабрадин от 10 до 15 мг/сутки – для 16 пациентов. Электрокардиологический контроль проводился двукратно в течении первого месяца, далее – один раз в месяц.
+Авторы считают, что в данной работе новыми являются следующие положения и результаты.
+В процессе разработки программного обеспечения для структурного анализа кардиосигнала (ЭССАКС-ЭКГ «SERG») проведён анализ 156 электрокардиографических лент, снятых в приёмном покое стационара, переданных направившими учреждениями, снятых бригадами «Скорой помощи» и имеющимися в архивах обследуемых пациентов.
+Удалось провести сравнительный количественный анализ изменения динамики электрокардиограмм представленных пациентами в сопроводитетельной документации, электрокардиографами приёмного покоя и стационарными в отделении функциональной диагностики.
+Врач функционалист получил возможность представить врачу кардиологу объективно выполненный анализ величины амплитуды и временного интервала  зубцов P, Q, R, S и T, сегментов, клинически значимого QRS-комплекса не только в миллиметровом и миллисекундном соотношении, но в процентном, что позволило значительно повысить объективность оценки динамики в критериях и коэффициентах, раннее указанными в  пособиях и руководствах по кардиологии, но до сих пор крайне редко используемыми практикующими врачами из-за большого объёма необходимых математических подсчётов.
+ Кардиолог, применив динамический анализ величин амплитуд и временных величин зубцов, сегментов и интервалов,  успешно выполнил безопасную рациональную коррекцию доз медикаментозной нагрузки в более короткий срок до 2-3-х суток, вместо обычных 5-6 дней.
+Дальнейшая разработка и внедрение в практику экспертных систем структурного анализа кардиосигнала значительно повысит качество кардиологического мониторинга пациента с коморбидной патологией повышенной сложности на междисциплинарном уровне.
+Литература:
+1.	Гонсалес, Р. «Цифровая обработка изображений в среде MATLAB» / Гонсалес Р., Вудс Р. - Издание 3-е, исправленное и дополненное - Москва: Техносфера, 2012. – 1104 с.
+2.	Ahlstrom M.L. and Tomhins W.J. Digital filters for real-time ECG signal processing using microprocessors // IEEE Trans. Biomed. Eng. – 1985. – V. 32. – P. 708-713.
+3.	Murthy I.S.N. and Rangaraj M.R. New concepts for PVC detection // IEEE Trans. Biomed. Eng. – 1979. – V. 26, No. 7. – P. 409-416.
+4.	Pan J. and Tomhins W.J. A real-time QRS detection algorithm // IEEE Trans. Biomed. Eng. – 1985. – V. 32. – P. 230-236.
+5.	Khaled Daqrouq QRS Complex Detection Based on Symmlets Wavwlwt Function / Khaled Daqrouq, Ibrahim N. AbuIsbeih, Abdel-Rahman Al-Qawasmi // 5th International MultiConference on Systems, Signals and Devices – 2008
+6.	Дубровин В. И. Усовершенствование методов анализа ЭКГ-сигналов на основе вейвлет-преобразования в системе электрокардиографии высокого разрешения / В. И. Дубровин, Ю. В. Твердохлеб // Радiоелектронiка, iнформатика, управ- лiння. № 1 – 2011 – с 91
+7.	Gritzali F., Frangakis G. and Papakonstantinou G. Detection of the P and T waves in an ECG // Comput. Biomed. Res. – 1976. – V. 9. – P. 125-132
+
+%\bibliographystyle{splncs03}
+%\bibliography{example}
+ \begin{thebibliography}{99}
+ \bibitem{wikipedia} Electrocardiography -- Wikipedia, the free encyclopedia. URL:\url{https://en.wikipedia.org/wiki/Electrocardiogram} (access date: 03.03.2016)
+ \end{thebibliography}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% For the final version of the paper: %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Author information
+%\vspace{4ex}\noindent
+%\textbf{Author One} is\dots
+%
+%\bigskip\noindent
+%\textbf{Author Two} is\dots
+%
+%\bigskip\noindent
+%\textbf{Author Three} is\dots
+
+%% Reception and acceptance information
+%\bigskip
+%\paragraph{Received: Month DD, 20YY; Accepted: Month DD, 20YY.}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
