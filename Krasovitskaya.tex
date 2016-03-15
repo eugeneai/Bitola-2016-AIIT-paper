@@ -118,19 +118,15 @@ The first stage of the ECG image processing is recognition of the time series if
 
 As the image consists of the combination of the background and signal line, we decided to filter out the background \cite{1}.  The following algorithm implements the filtering.
 \begin{enumerate}
-\item Из исходного изображения выделяется канал, соответствующий
-  цвету фона.
-\item Копия изображения в красном канале размывается с
-  помощью Гауссовского фильтра.
-\item Бинарное изображение временного
-  ряда получается в результате применения формулы
-  $s(n)=f(n)+\sigma e(n)$, где $f(n)$ – полезный сигнал, $\sigma$ –
-  noise level, $e(n)$ – гауссов белый шум, $s(n)$ is the original
-  signal.  К изображению так же применяется пороговое преобразование.
-\item Считывание сигнала происходит путем цикличной обработки столбцов
-  получившегося массива.
+\item A color channel of the background color is extracted from the source image.
+\item A red image copy is blurred with Gaussian filter in the red channel.
+\item The digital image of the lead time series is obtained using the following formula:
+  $s(n)=f(n)+\sigma e(n)$, where $f(n)$ is the signal, $\sigma$ is the
+  noise level, $e(n)$ is the Gaussian white noise, and $s(n)$ is the original
+  signal.  The threshold transformation is applied to the image as well.
+\item The signal recording is carried on in a cyclic processing \nnn{of the columns of the obtained array.}
 \end{enumerate}
-Полученный вариант алгоритма не давал требуемый результат на всех тестовых данных. Из 156 обработанных кардиограмм 10 распознавались не полностью. Анализ показал, что на результат влияет параметр функции порогового преобразования. Для настройки параметров этой функции использована методика машинного обучения, где в качестве вектора признаков выступали цветовые и яркостные характеристики каждого столбца изображения.
+The algorithm did not produce results in all the test given.  Ten out of 156 ECGs did not completely analyzed due to threshold transformation function.  The function parameters were adjusted by means of a machine learning technique.  Hue and brightness characteristics of each column of the image were used as attributes of input train set.
 
 
 \begin{figure}[htb]
@@ -140,17 +136,14 @@ As the image consists of the combination of the background and signal line, we d
   \label{fig:leads-ex}
 \end{figure}
 
-\subsection{Cleaning artefacts}
+\subsection{Time series post processing}
 \label{sec:cleaning-artefacts}
 
-Как во время снятия ЭКГ, так и во время её оцифровки на полученном сигнале могут возникнуть артефакты. Примерами таких артефактов выступают дрейф изолинии и сетевая наводка. Дрейф изолинии относится к низкочастотным артефактам и образуются, как правило, в результате сильных движений, поляризацией электродов, погрешности аппарата или из-за плохого контакта с кожей. Для устранения низкочастотных помех такого рода рекомендуется использовать фильтр Баттерворта, заданный в дискретной частотной области как
-
+The original ECG image in a general case contains signal distortions such as baseline drift and proximity effect to energy supply network.  A similar low frequency distortion could also be introduces by the time series recognition algorithm.  The baseline drift arises due to patient's movement, electrode polarization, appliance measurement error, and bad electrode contact to patient's skin.  Removal of the low frequency distortions we used discrete Butterworth filter
 $$
 |H(k)|^2=\frac{1}{1+(k/k_c)^{2N}},
 $$
-где $H$ – частотная характеристика аналогового фильтра, $k_c$  – частота среза (рад/с), $k$ – аналоговая частота в радианах.
-Сетевая наводка обычно имеет частоту в 50 или 60 Гц. Данный артефакт устраняется путем применения режекторных и гребенчатых фильтров.
-Выбор фильтров основывался на эмпирическом опыте и рекомендациях в литературе.
+where $H$ is frequency response of the analog filter, $k_c$ is a cutoff frequency (rad/s), $k$ is the analog frequency in radiant.  The energy supply network has usually 50 or 60 Hertz frequency, and its distortion is standard suppressed with band-stop and comb filters.
 
 Синхронное устранение или усреднение по ансамблю используется, когда доступно много копий ЭКС. Шум является стационарным случайным процессом, а сам сигнал (квази-) периодический или циклически-стационарный. Фильтр скользящего среднего во временной области можно применять к статистически стационарным низкочастотным сигналам. Данный метод обеспечивает быструю фильтрацию в масштабах реального времени. Если же фильтрация в реальном масштабе времени не требуется, то используют фильтрацию в частотной области. Если есть информация по спектральной мощности или автокорреляционной функции сигнала и шума, то применяют оптимальный фильтр Винера. Если же шум некоррелирован с сигналом, помеха имеет нестационарный (и порой неслучайный) характер, дополнительной информации нет, но зато есть запись сигнала со второго источника, то используется адаптивная фильтрация.
 
