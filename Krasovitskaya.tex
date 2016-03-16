@@ -1,4 +1,6 @@
 \documentclass[runningheads]{AIIT}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
 
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \definecolor{rclr}{rgb}{0.5,0.1,0.1}
@@ -10,8 +12,8 @@
 {+\ [}\textcolor{#1}{#2}\textcolor{eclr}{]}}
 \newcommand{\rrr}[2][rcolor]{\noindent%
 \textcolor{eclr}{-\ [}\textcolor{#1}{#2}\textcolor{eclr}{]}}
-\newcommand{\nnn}[2][ncolor]{\noindent%
-\textcolor{eclr}{!\ [}\textcolor{#1}{#2}\textcolor{eclr}{]}}
+\newcommand{\nnn}[2][rcolor]{\noindent%
+\textcolor{eclr}{}\textcolor{#1}{#2}\textcolor{eclr}{}}
 
 \usepackage{hyperref}
 \hypersetup{
@@ -61,7 +63,7 @@ Institute of System Dynamics and Control Theory at Siberian Branch of Russian Ac
 Lermontov str. 134, Irkutsk, Russian Federation\\
   \email{eugeneai@icc.ru}}
 \begin{document}
-
+%\selectlanguage{}
 \maketitle
 
 \begin{abstract}
@@ -155,13 +157,9 @@ If the real time mode is not required we use filtering in the frequency space.  
 \subsection{QRS complex detection}
 \label{sec:qrs-compl-detect}
 
-The QRS complex recognition is usually based on locating R pike with the following removal of the whole QRS complex from the ECG time series.
+The QRS complex recognition is usually based on locating R pike with the following removal of the whole QRS complex from the ECG time series.  The R location is obtained by means of various methods, e.g., based on the derivative \cite{2}, sliding mean filer, weighted and quadratic operators of the first derivative \cite{3}, detection algorithm of Pan-Tompkins \cite{4}.  For PQRST complex detection, there are discrete wavelet transformation based algorithms \cite{5, 6}, and \nnn{«по длительности»} transformations \cite{7}.
 
-Все изученные авторами методы обнаружения QRS-комплекса основываются на поиске пика R и последующем удалении комплекса с копии ЭКС для последующего исследования. В исследовании рассмотрены методы, основанные на производной [2], на фильтре скользящего среднего, взвешенном и возведенном в квадрат операторе первой производной [3], алгоритм обнаружения QRS-комплекса Пана-Томпкинса [4]. Для комплексного подхода к обнаружению PQRST рассматривались алгоритмы, основывающиеся на дискретном вейвлет-преобразовании[5, 6], на преобразованиях «по длительности» [7].
-
-Мы остановились на методе с дискретным вейвлет-преобразованием, так как он находит пики даже на сигнале с дрейфом изолинии.
-Ранее распознанный сигнал загружается из файла. Проводится вейвлет-декомпозиция четвертого уровня (рис. 4), исходный сигнал раскладывается вейвлетом Добеши.
-
+In this project we used discrete wavelet transformation method as it can determine pikes in the signals with base line drift distortion.  The previously recognized time series are loaded from a file and wavelet decomposition of \nnn{4th level} id carried on over the loaded data (Fig.~\ref{fig:decomp}, the source signal is decomposed with Daubechies wavelet.
 
 \begin{figure}[htb]
   \centering
@@ -170,18 +168,38 @@ The QRS complex recognition is usually based on locating R pike with the followi
   \label{fig:decomp}
 \end{figure}
 
-Рисунок 4. График детализирующих коэффициентов.
-Извлекаются коэффициенты разложения, строится их график и анализируется оператором. Выбирается наиболее похожий на исходный сигнал коэффициент, но при этом уже очищенный от шумов. Ищутся все значения, превышающие 60% от максимума в выбранном уровне (рис.5).
+At the next processing stage the obtained time series analyzed visually by operator (user).  Then operator chooses the variant that is similar to the original time series.  The chosen variant contains no distortion.  Then the R pikes are determined as maximal values among time moments, where signal amplitude is greater of 60\% of the maximal value on the interval.
 
-Рисунок 5. Поиск R-зубцов на декомпозированном сигнале.
-Поскольку в этот массив могут попасть соседние значения, то производится фильтрация слишком близких пиков. Компенсируется ошибка смещения относительно исходного сигнала. На основе обнаруженных позиций ищутся остальные пики. (рис. 6, 7).
+\begin{figure}[htb]
+  \centering
 
-Рисунок 6. Поиск зубцов на ЭКГ с дрейфом изолинии
+  \caption{R pike determination}
+  \label{fig:determ-R}
+\end{figure}
+The determined maximal values positions are also filtered according to pike average distance criterion.  The measured pike amplitude is corrected with respect to the bias of the original signal.  The determined locations the rest of the pikes are determined (Fig.\ref{fig6} and \ref{fig:fig7}).
 
-Рисунок 7. Поиск зубцов на недекомпозированном сигнале
+\begin{figure}[htb]
+  \centering
+
+  \caption{R pike determination (base line drift)}
+  \label{fig:fig6}
+\end{figure}
+
+\begin{figure}[htb]
+  \centering
+
+  \caption{R pike determination (nondecomposed signal)}
+  \label{fig:fig7}
+\end{figure}
+
+\section{Applications}
+\label{sec:applications}
+
  Во время  наблюдения  первичных манифестаций нежелательных побочных реакций на многомесячную противотуберкулезную химиотерапию у пациентов с коморбидной сердечнососудистой патологией был проведён сравнительный анализ динамических электрокардиографических изменений в виде различных аритмий и нарушений проводимости: ритм из правого предсердия – 18 случаев, атриовентрикулярная блокада I ст. – 7, полная блокада левой ножки пучка Гиса – 2, синдром Бругада – 7, синдром слабости синусового узла – 1, миграция водителя ритма по предсердиям – 2, фибрилляция предсердий – 10, удлинение интервала Q –T – 1, укорочение интервала P-Q – синдром  преждевременного возбуждения желудочков сердца Клерка– Леви– Кристеско (CLC) – 12, фатальный синдром  преждевременного возбуждения желудочков  Вольфа-Паркинсона-Вайта (WPW), тип «Б» – 1, острый инфаркт миокарда с формированием патологического зубца Q – 3, острый инфаркт миокарда без зубца Q (-) но с подъёмом сегмента S-T – 3, синусовая тахикардия – 4, изолированный синдром ранней реполяризации желудочков  – 4 пациента.
 Всем 78 больным на фоне начатой с момента поступления в стационар химиотерапии противотуберкулезными препаратами с учётом безопасности лекарственных взаимодействий назначены: внутримитохондриальный цитопротектор – мексидол инфузионно 1000 мг/сутки до 15 дней, амиодарон от 400 до 800 мг/сутки – для 10 до 10 дней, пропафенон от 450 до 900 мг/сутки – для 14 до 30 дней, бисопролол от 5 до 10 мг/сутки – для 12 до 30 дней, метопролола сукцинат от 25 до 50 мг/сутки  – для 28 до 30 дней, ивабрадин от 10 до 15 мг/сутки – для 16 пациентов. Электрокардиологический контроль проводился двукратно в течении первого месяца, далее – один раз в месяц.
-Авторы считают, что в данной работе новыми являются следующие положения и результаты.
+
+\section*{Conclusion}
+
 В процессе разработки программного обеспечения для структурного анализа кардиосигнала (ЭССАКС-ЭКГ «SERG») проведён анализ 156 электрокардиографических лент, снятых в приёмном покое стационара, переданных направившими учреждениями, снятых бригадами «Скорой помощи» и имеющимися в архивах обследуемых пациентов.
 Удалось провести сравнительный количественный анализ изменения динамики электрокардиограмм представленных пациентами в сопроводитетельной документации, электрокардиографами приёмного покоя и стационарными в отделении функциональной диагностики.
 Врач функционалист получил возможность представить врачу кардиологу объективно выполненный анализ величины амплитуды и временного интервала  зубцов P, Q, R, S и T, сегментов, клинически значимого QRS-комплекса не только в миллиметровом и миллисекундном соотношении, но в процентном, что позволило значительно повысить объективность оценки динамики в критериях и коэффициентах, раннее указанными в  пособиях и руководствах по кардиологии, но до сих пор крайне редко используемыми практикующими врачами из-за большого объёма необходимых математических подсчётов.
