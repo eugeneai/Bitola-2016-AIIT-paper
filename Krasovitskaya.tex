@@ -145,7 +145,9 @@ $$
 $$
 where $H$ is frequency response of the analog filter, $k_c$ is a cutoff frequency (rad/s), $k$ is the analog frequency in radiant.  The energy supply network has usually 50 or 60 Hertz frequency, and its distortion is standard suppressed with band-stop and comb filters.
 
-Синхронное устранение или усреднение по ансамблю используется, когда доступно много копий ЭКС. Шум является стационарным случайным процессом, а сам сигнал (квази-) периодический или циклически-стационарный. Фильтр скользящего среднего во временной области можно применять к статистически стационарным низкочастотным сигналам. Данный метод обеспечивает быструю фильтрацию в масштабах реального времени. Если же фильтрация в реальном масштабе времени не требуется, то используют фильтрацию в частотной области. Если есть информация по спектральной мощности или автокорреляционной функции сигнала и шума, то применяют оптимальный фильтр Винера. Если же шум некоррелирован с сигналом, помеха имеет нестационарный (и порой неслучайный) характер, дополнительной информации нет, но зато есть запись сигнала со второго источника, то используется адаптивная фильтрация.
+In the case when many copies of ECG is accessible, one can take advantage of synchronous and ensemble averaging techniques.  The noise is a stationary stochastic process, and the ECG signal itself is (quasi-) periodical or periodical-stationary.  Sliding mean filer in time space is applicable to a statistically stationary low frequency signals.  This technique provides filtering capabilities in real time.
+
+If the real time mode is not required we use filtering in the frequency space.  If a power spectral density and autocorrelation function parameters are known, one can make use of optimal Wiener filter.  If the noise id not correlated with the signal or the distortion has nonstationary (or even stochastic) properties and there are no additional data, but we have a record from a secondary source, then adaptive filtering is used.
 
 \section{ECG entities recognition}
 \label{sec:ecg-etit-recogn}
@@ -153,7 +155,10 @@ where $H$ is frequency response of the analog filter, $k_c$ is a cutoff frequenc
 \subsection{QRS complex detection}
 \label{sec:qrs-compl-detect}
 
+The QRS complex recognition is usually based on locating R pike with the following removal of the whole QRS complex from the ECG time series.
+
 Все изученные авторами методы обнаружения QRS-комплекса основываются на поиске пика R и последующем удалении комплекса с копии ЭКС для последующего исследования. В исследовании рассмотрены методы, основанные на производной [2], на фильтре скользящего среднего, взвешенном и возведенном в квадрат операторе первой производной [3], алгоритм обнаружения QRS-комплекса Пана-Томпкинса [4]. Для комплексного подхода к обнаружению PQRST рассматривались алгоритмы, основывающиеся на дискретном вейвлет-преобразовании[5, 6], на преобразованиях «по длительности» [7].
+
 Мы остановились на методе с дискретным вейвлет-преобразованием, так как он находит пики даже на сигнале с дрейфом изолинии.
 Ранее распознанный сигнал загружается из файла. Проводится вейвлет-декомпозиция четвертого уровня (рис. 4), исходный сигнал раскладывается вейвлетом Добеши.
 
