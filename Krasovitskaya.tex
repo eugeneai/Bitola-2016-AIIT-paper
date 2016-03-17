@@ -3,6 +3,7 @@
 \usepackage[russian]{babel}
 
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{graphicx}
 \definecolor{rclr}{rgb}{0.5,0.1,0.1}
 \definecolor{eclr}{rgb}{0,0.5,0.5}
 \colorlet{acolor}{blue}
@@ -69,21 +70,21 @@ Lermontov str. 134, Irkutsk, 664033, Russian Federation\\
 \begin{abstract}
 The paper deals with process of a cardiological expert system development. A definition of a electrocardiogram is presented. Problems of ECG characteristics determination such as ECG data digitizing is considered. A problem of QRS complex recognition and P and T waves parameters measurement is discussed. A general outline of analysis technique for ECG using wavelet transformation are proposed.
 
-\vspace{6pt}\textbf{Keywords:} keyword1, keyword2.
+\vspace{6pt}\textbf{Keywords:} \nnn{keyword1, keyword2}.
 \end{abstract}
 
 \section{Introduction}
 
-Medical images are popular objects of automatic analysis.  An image of a cardiogram contains time series of a cardiosignals, which are processed simultaneously and synchronous.  Manual static analysis contains a number of stages \nnn{like \dots}.  The signal processing software delivered with a cardiological diagnosis is intended for experienced users and tightly bound to the appliance version, resulting to impossibility to make a comparative analysis of elecro cardiograms of the same patient obtained in different medical centers and time moments.  This, in turn, requires additional observations to be carried on the patient to obtain the time series in the \nnn{needed} format, increasing the cost of the patient residence in the diagnostic center.  Also, Russia has regions where the specialized professional cardiological treatment is not possible, this can produce complications due to, e.g., delays.
+Medical images are popular objects of automatic analysis.  An image of a cardiogram contains time series of a cardiosignals, which are processed simultaneously and synchronous.  Manual static analysis contains a number of stages \nnn{like \dots}.  The signal processing software delivered with a cardiological diagnosis is intended for experienced users and tightly bound to the appliance version, resulting to impossibility to make a comparative analysis of elecro cardiograms of the same patient obtained in different medical centers and time moments.  This, in turn, requires additional observations to be carried on the patient to obtain the time series in the used by expert file and data format, increasing the cost of the patient residence in the diagnostic center.  Also, Russia has regions where the specialized professional cardiological treatment is not possible, this can produce complications due to, e.g., delays.
 
 Ministry of Health of Russian Federation started to elaborate of a law project aimed at a legal basis construction of IT infrastructure for public health protection.  The infrastructure will be based on remote interaction of medical professionals and patients.  At present the interaction (such as remote consultations) is out of professional moderation and provided via forums, specialized internet sites and Skype.  The cardiological data is supplied as attached photographic as scanned images.  The conclusion decision made in the environment are of question.
 
 The automatic processing and analysis of the ECG will reduce human factor impact to resulting conclusion decision, since automatic processing results are not affected by the degree of fatigue, observation time, and body physical condition.  Moreover the results produced by human expert are usually intuitive, expressed in quality statements, and the reasoning process is hardly expressed as explicit elementary stages (algorithmic).  For example, the expert estimates the width of PQ interval to be shorter as compares to described in the literature, in addition the estimation varies among specialists.  Computer processing and analysis is significantly formalized and operates by qualitative values.
 
+The computational ECG processing has already more than 20 years.  But it seems that there are no industry standards of data format and processing pipelines of the EGC images as well as complete set of methods, IT tools and techniques for implementation of each stage of the pipeline.  The ECG image processing problem is classified as artificial intelligence recognition task with the lack and data distortion, as well as
 
-
-
-Уже более пятнадцати лет в сфере компьютерной обработки электрокардиосигнала проводятся исследования, но, как правило, каждый из методов обладает рядом недостатков, которые не позволяют осуществить его полноценное внедрение. Система «Валента» анализирует сигналы ЭКГ, однако ввести в неё данные с оборудования другой фирмы или же снятые другими аппаратами оцифрованные ленты возможности нет. Системы мониторного контроля, например, система контроля аритмий Argus, так же требуют наличия специального оборудования. Профессором д.м.н. В.М.Успенским предложен новый метод диагностики, позволяющий диагностировать широкий спектр заболеваний внутренних органов по ЭКГ.  Но и в этом случае алгоритм не охватывает существенную часть заболеваний сердца, основным проявлением которых являются аритмии. Только за последние три года процент страдающих аритмиями составил 8% . Ни одна из рассмотренных систем не обрабатывает бумажные электрокардиограммы, хотя сегодня этот вид носителя электрокардиоинформации остается самым популярным. Оцифровка лент ЭКГ так же позволяет сохранить важные диагностические данные в истории болезни и архиве пациента.
+In Russian Federation, system ``Valenta'' is a popular software tool for
+Система «Валента» анализирует сигналы ЭКГ, однако ввести в неё данные с оборудования другой фирмы или же снятые другими аппаратами оцифрованные ленты возможности нет. Системы мониторного контроля, например, система контроля аритмий Argus, так же требуют наличия специального оборудования. Профессором д.м.н. В.М.Успенским предложен новый метод диагностики, позволяющий диагностировать широкий спектр заболеваний внутренних органов по ЭКГ.  Но и в этом случае алгоритм не охватывает существенную часть заболеваний сердца, основным проявлением которых являются аритмии. Только за последние три года процент страдающих аритмиями составил 8% . Ни одна из рассмотренных систем не обрабатывает бумажные электрокардиограммы, хотя сегодня этот вид носителя электрокардиоинформации остается самым популярным. Оцифровка лент ЭКГ так же позволяет сохранить важные диагностические данные в истории болезни и архиве пациента.
 
 In this investigation we develop an IT technique and software, which will process and analyze ECG raster images obtained in cardiologist's offices, from medical organizations and medical histories.
 
@@ -97,7 +98,7 @@ Each ECG analysis is started from verification of used registration process.  Th
 
 \begin{figure}[htb]
   \centering
-    includegraphics [width=0.5\linewidth] {images/Stand_ECG.jpg}
+    \includegraphics[width=0.5\linewidth]{images/Stand_ECG.jpg}
   \caption{Standard twelve-lead ECG}
   \label{fig:leads-ex}
 \end{figure}
@@ -113,7 +114,7 @@ The first stage of the ECG image processing is recognition of the time series if
 
 \begin{figure}[htb]
   \centering
-    includegraphics [width=0.5\linewidth] {images/Sobel.jpg}
+    \includegraphics[width=0.5\linewidth] {images/Sobel.jpg}
   \caption{Sobel filter processing (inversed)}
   \label{fig:sobel-ex}
 \end{figure}
@@ -133,7 +134,7 @@ The algorithm did not produce results in all the test given.  Ten out of 156 ECG
 
 \begin{figure}[htb]
   \centering
-    includegraphics [width=0.5\linewidth] {images/Algorithm.jpg}
+    \includegraphics[width=0.5\linewidth] {images/Algorithm.jpg}
   \caption{Time series recognition algorithm stages}
   \label{fig:leads-ex}
 \end{figure}
@@ -163,7 +164,7 @@ In this project we used discrete wavelet transformation method as it can determi
 
 \begin{figure}[htb]
   \centering
-    includegraphics [width=0.5\linewidth] {images/Decomposition.jpg}
+    \includegraphics[width=0.5\linewidth] {images/Decomposition.jpg}
   \caption{Low frequencies decomposition}
   \label{fig:decomp}
 \end{figure}
@@ -172,7 +173,7 @@ At the next processing stage the obtained time series analyzed visually by opera
 
 \begin{figure}[htb]
   \centering
-    includegraphics [width=0.5\linewidth] {images/R-pike.jpg}
+    \includegraphics[width=0.5\linewidth] {images/R-pike.jpg}
   \caption{R pike determination}
   \label{fig:determ-R}
 \end{figure}
@@ -180,14 +181,14 @@ The determined maximal values positions are also filtered according to pike aver
 
 \begin{figure}[htb]
   \centering
-    includegraphics [width=0.5\linewidth] {images/Drift.jpg}
+    \includegraphics[width=0.5\linewidth] {images/Drift.jpg}
   \caption{R pike determination (base line drift)}
   \label{fig:fig6}
 \end{figure}
 
 \begin{figure}[htb]
   \centering
-    includegraphics [width=0.5\linewidth] {images/NonDecomposed.jpg}
+    \includegraphics[width=0.5\linewidth] {images/NonDecomposed.jpg}
   \caption{R pike determination (nondecomposed signal)}
   \label{fig:fig7}
 \end{figure}
