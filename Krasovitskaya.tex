@@ -157,7 +157,7 @@ If the real time mode is not required we use filtering in the frequency space.  
 \subsection{QRS complex detection}
 \label{sec:qrs-compl-detect}
 
-The QRS complex recognition is usually based on locating R pike with the following removal of the whole QRS complex from the ECG time series.  The R location is obtained by means of various methods, e.g., based on the derivative \cite{2}, sliding mean filer, weighted and quadratic operators of the first derivative \cite{3}, detection algorithm of Pan-Tompkins \cite{4}.  For PQRST complex detection, there are discrete wavelet transformation based algorithms \cite{5, 6}, and \nnn{«по длительности»} transformations \cite{7}.
+The QRS complex recognition is usually based on locating R pike with the following removal of the whole QRS complex from the ECG time series.  The R location is obtained by means of various methods, e.g., based on the derivative \cite{2}, sliding mean filer, weighted and quadratic operators of the first derivative \cite{3}, detection algorithm of Pan-Tompkins \cite{4}.  For PQRST complex detection, there are discrete wavelet transformation based algorithms \cite{5,6}, and \nnn{«по длительности»} transformations \cite{7}.
 
 In this project we used discrete wavelet transformation method as it can determine pikes in the signals with base line drift distortion.  The previously recognized time series are loaded from a file and wavelet decomposition of \nnn{4th level} id carried on over the loaded data (Fig.~\ref{fig:decomp}, the source signal is decomposed with Daubechies wavelet.
 
@@ -176,7 +176,7 @@ At the next processing stage the obtained time series analyzed visually by opera
   \caption{R pike determination}
   \label{fig:determ-R}
 \end{figure}
-The determined maximal values positions are also filtered according to pike average distance criterion.  The measured pike amplitude is corrected with respect to the bias of the original signal.  The determined locations the rest of the pikes are determined (Fig.\ref{fig6} and \ref{fig:fig7}).
+The determined maximal values positions are also filtered according to pike average distance criterion.  The measured pike amplitude is corrected with respect to the bias of the original signal.  The determined locations the rest of the pikes are determined (Fig.\ref{fig:fig6} and \ref{fig:fig7}).
 
 \begin{figure}[htb]
   \centering
@@ -210,18 +210,25 @@ It this paper we briefly described an IT technique for ECG image scans processin
 The further development of the technique and its software and their implementation in practice of expert systems of the structural analysis of ECG will significantly improve the quality of cardiological monitoring of the patients with a complex comorbid disorders \nnn{in a interdisciplinary level}.
 
 Литература:
-1.	Гонсалес, Р. «Цифровая обработка изображений в среде MATLAB» / Гонсалес Р., Вудс Р. - Издание 3-е, исправленное и дополненное - Москва: Техносфера, 2012. – 1104 с.
-2.	Ahlstrom M.L. and Tomhins W.J. Digital filters for real-time ECG signal processing using microprocessors // IEEE Trans. Biomed. Eng. – 1985. – V. 32. – P. 708-713.
-3.	Murthy I.S.N. and Rangaraj M.R. New concepts for PVC detection // IEEE Trans. Biomed. Eng. – 1979. – V. 26, No. 7. – P. 409-416.
-4.	Pan J. and Tomhins W.J. A real-time QRS detection algorithm // IEEE Trans. Biomed. Eng. – 1985. – V. 32. – P. 230-236.
-5.	Khaled Daqrouq QRS Complex Detection Based on Symmlets Wavwlwt Function / Khaled Daqrouq, Ibrahim N. AbuIsbeih, Abdel-Rahman Al-Qawasmi // 5th International MultiConference on Systems, Signals and Devices – 2008
-6.	Дубровин В. И. Усовершенствование методов анализа ЭКГ-сигналов на основе вейвлет-преобразования в системе электрокардиографии высокого разрешения / В. И. Дубровин, Ю. В. Твердохлеб // Радiоелектронiка, iнформатика, управ- лiння. № 1 – 2011 – с 91
-7.	Gritzali F., Frangakis G. and Papakonstantinou G. Detection of the P and T waves in an ECG // Comput. Biomed. Res. – 1976. – V. 9. – P. 125-132
-
 %\bibliographystyle{splncs03}
 %\bibliography{example}
  \begin{thebibliography}{99}
  \bibitem{wikipedia} Electrocardiography -- Wikipedia, the free encyclopedia. URL:\url{https://en.wikipedia.org/wiki/Electrocardiogram} (access date: 03.03.2016)
+
+ \bibitem{1} Гонсалес, Р. «Цифровая обработка изображений в среде MATLAB» / Гонсалес Р., Вудс Р. - Издание 3-е, исправленное и дополненное - Москва: Техносфера, 2012. – 1104 с.
+
+ \bibitem{2} Ahlstrom M.L. and Tomhins W.J. Digital filters for real-time ECG signal processing using microprocessors // IEEE Trans. Biomed. Eng. – 1985. – V. 32. – P. 708-713.
+
+ \bibitem{3} Murthy I.S.N. and Rangaraj M.R. New concepts for PVC detection // IEEE Trans. Biomed. Eng. – 1979. – V. 26, No. 7. – P. 409-416.
+
+ \bibitem{4} Pan J. and Tomhins W.J. A real-time QRS detection algorithm // IEEE Trans. Biomed. Eng. – 1985. – V. 32. – P. 230-236.
+
+ \bibitem{5} Khaled Daqrouq QRS Complex Detection Based on Symmlets Wavwlwt Function / Khaled Daqrouq, Ibrahim N. AbuIsbeih, Abdel-Rahman Al-Qawasmi // 5th International MultiConference on Systems, Signals and Devices – 2008
+
+ \bibitem{6} Дубровин В. И. Усовершенствование методов анализа ЭКГ-сигналов на основе вейвлет-преобразования в системе электрокардиографии высокого разрешения / В. И. Дубровин, Ю. В. Твердохлеб // Радiоелектронiка, iнформатика, управ- лiння. № 1 – 2011 – с 91
+
+ \bibitem{7} Gritzali F., Frangakis G. and Papakonstantinou G. Detection of the P and T waves in an ECG // Comput. Biomed. Res. – 1976. – V. 9. – P. 125-132
+
  \end{thebibliography}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
