@@ -1,9 +1,11 @@
 \documentclass[runningheads]{AIIT}
-%\usepackage[utf8]{inputenc}
-%\usepackage[russian]{babel}
-
-\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
 \usepackage{graphicx}
+\usepackage{hyperref}
+
+%---------- BEGIN May be removed ------------------
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \definecolor{rclr}{rgb}{0.5,0.1,0.1}
 \definecolor{eclr}{rgb}{0,0.5,0.5}
 \colorlet{acolor}{blue}
@@ -15,8 +17,8 @@
 \textcolor{eclr}{-\ [}\textcolor{#1}{#2}\textcolor{eclr}{]}}
 \newcommand{\nnn}[2][rcolor]{\noindent%
 \textcolor{eclr}{}\textcolor{#1}{#2}\textcolor{eclr}{}}
+%---------- END May be removed ------------------
 
-\usepackage{hyperref}
 \hypersetup{
     bookmarks=true,         % show bookmarks bar?
     unicode=true,           % non-Latin characters in Acrobat’s bookmarks
@@ -25,13 +27,13 @@
     pdffitwindow=false,     % window fit to page when opened
     pdfstartview={FitH},    % fits the width of the page to the window
     pdftitle={Expert System for Structural Analysis\\ of Electrocardiogramms},    % title
-    pdfauthor={Kristina Krasovitskaya, Evgeny Cherkashin},     % author
+    pdfauthor={Kristina Krasovitskaya, Evgeny Cherkashin, Sergey Gorunchik},     % author
     pdfsubject={Electro cardio signal processing and recognition},   % subject of the document
     pdfcreator={EMACS-24.5:AuCTeX-0.89},   % creator of the document
     pdfproducer={PdfLaTeX}, % producer of the document
-    pdfkeywords={Искусственный интеллект} {Логическое
-      программирование} {Планирование действий} {Удовлетворение
-      ограничений} {Компьютерная алгебра} {Принцип максимума} {Оптимальное управление}, % list of keywords
+    pdfkeywords={electrocardiogram} {ECG} {expert system} {ECG recognition}
+      {electrocardiosignal} {time series recognition} {image processing}
+      {continuous wavelet transformation}, % list of keywords
     pdfnewwindow=true,      % links in new window
     colorlinks=true,       % false: boxed links; true: colored links
     linkcolor=black,          % color of internal links (black)
@@ -51,18 +53,22 @@
 %% Use this if the title is too long for the running heads
 \titlerunning{Expert System for ECS}
 
-\author{Kristina Krasovitskaya\inst{1} \and Evgeny Cherkashin\inst{2}}
+\author{Kristina Krasovitskaya\inst{1} \and Evgeny Cherkashin\inst{2} \and Sergey Gorunchik\inst{3}}
 
 %% Use this the list of authors is too long for the running heads
 %\authorrunning{First Author et al.}
 
 \institute{National Research Irkutsk State Technical University,\\
-Lermontov str. 83, Irkutsk, 664078, Russian Federation\\
-  \email{author1@institute.org}
+Lermontov str. 83, Irkutsk, 664074, Russian Federation\\
+  \email{kristina.kras1993@gmail.com}
   \and
 Institute of System Dynamics and Control Theory at Siberian Branch of Russian Academy of Sciences,\\
 Lermontov str. 134, Irkutsk, 664033, Russian Federation\\
-  \email{eugeneai@icc.ru}}
+  \email{eugeneai@icc.ru}
+  \and
+  Specialized Tuberculosis Hospital in Rostov region,\\
+Orskaya str. 24, Rostov-on-Don, 344000, Russian Federation\\
+  \email{sergeygreen@mail.ru}}
 \begin{document}
 %\selectlanguage{}
 \maketitle
@@ -70,12 +76,12 @@ Lermontov str. 134, Irkutsk, 664033, Russian Federation\\
 \begin{abstract}
 The paper deals with process of a cardiological expert system development. A definition of a electrocardiogram is presented. Problems of ECG characteristics determination such as ECG data digitizing is considered. A problem of QRS complex recognition and P and T waves parameters measurement is discussed. A general outline of analysis technique for ECG using wavelet transformation are proposed.
 
-\vspace{6pt}\textbf{Keywords:} electrocardiogram,  time series recognition, image processing, continuous wavelet transformation.
+\vspace{6pt}\textbf{Keywords:} electrocardiogram, ECG, expert system, ECG recognition, electrocardiosignal, time series recognition, image processing, continuous wavelet transformation.
 \end{abstract}
 
 \section{Introduction}
 
-Medical images are popular objects of automatic analysis.  An image of an electrocardiogram (ECG) contains time series of a cardiosignals, which are processed synchronously.  Manual static analysis contains a number of stages \nnn{like \dots}.  The signal processing software delivered with a cardiological diagnosis is intended for experienced functional diagnostician and rigidly bound to the appliance model, resulting to impossibility to make a comparative analysis of ECGs of the same patient data obtained in different medical centers and time moments.  This, in turn, implies additional examination to be carried on the patient to obtain the time series in a required file and data format, increasing the cost of the patient residence in the diagnostic center.  Also, Russia has regions where the specialized professional cardiological treatment is not possible, this can lead to fatal complications due to time delays.
+Medical images are popular objects of automatic analysis.  An image of an electrocardiogram (ECG) contains time series of a cardiosignals, which are processed synchronously.  Manual static analysis is always a multistage process.  The signal processing software delivered with a cardiological diagnosis is intended for experienced functional diagnostician and rigidly bound to the appliance model, resulting to impossibility to make a comparative analysis of ECGs of the same patient data obtained in different medical centers and time moments.  This, in turn, implies additional examination to be carried on the patient to obtain the time series in a required file and data format, increasing the cost of the patient residence in the diagnostic center.  Also, Russia has regions where the specialized professional cardiological treatment is not possible, this can lead to fatal complications due to time delays.
 
 In order to improve the quality and accessibility of medical cardiology provision for the population, Ministry of Health of Russian Federation started to elaborate of a law project aimed at a legal basis construction of IT infrastructure for public health protection.  The infrastructure will be based on remote interaction of medical professionals and patients.  At present the interaction (such as remote consultations) is out of professional moderation and provided via forums, specialized internet sites and Skype.  The cardiological data is supplied as attached photographic as scanned images.  The final conclusions made in the environment are of question.
 
@@ -105,7 +111,7 @@ Each ECG analysis is started from verification of the registration process.  The
 \section{Image processing}
 \label{sec:image-processing}
 
-\subsection{Digitizing (recognition)}
+\subsection{Recognition of lead time series}
 \label{sec:digit-recogn}
 
 % Time series digitizing
@@ -194,9 +200,10 @@ The determined maximal values positions are also filtered according to pike aver
 \section{Applications}
 \label{sec:applications}
 
+\nnn{Написать, как использовалосьб программное обеспечение в процессе решения задач ниже.}
+
 A comparative dynamics analysis of EGC of abnormal hearth rhythms in form of various arrhythmia and conduction disorder has been carried on during patient observations of primary manifestations of undesirable side effects on the months-long anti-tuberculosis chemotherapy.  The abnormalities are as follows (with the number of observations): the rhythm of the right atrium (18 cases), atrioventricular block I st. (7 cases), full blockade of the left His'  leg bundle (2 cases), Brugad syndrome (7 cases), sick sinus syndrome (1 case), pacemaker migration on the atria (2 cases), pacemaker migration on the atria (10 cases), lengthening the interval Q--T (1 case), shortening of P--Q interval --- syndrome premature ventricular heart Сlerk-Levi-Cristesco (CLC) (12 cases), atal syndrome of premature ventricular Wolff-Parkinson-White (WPW), type "B" (1 case), acute myocardial infarction with the formation of pathological wave the Q (3 cases), acute myocardial infarction without pike Q (-) but with the rise of segment S-T (3 cases), sinus tachycardia (4 cases), isolated syndrome early ventricular repolarization (4 cases).
 
-\nnn{All 78 patients in the background started from the moment of admission to the hospital chemotherapy anti-TB drugs, taking into account the safety of drug interactions appointed: intromitohondrial cytoprotektor – «Mexidol» infusion of 1000 mg / day to 15 days, amiodarone from 400 to 800 mg / day - for 10 patients to 10 days, «Propafenone» from 450 to 900 mg / day - for 14 patients to 30 days, Bisoprolol from 5 to 10 mg / day - for 12 to 30 days, Metoprolol Succinate from 25 to 50 mg / day - for 28 patients to 30 days, « Ivabradine» from 10 to 15 mg / day - to the 16  patients. Elektrokardiologiest control was carried out twice during the first month, then - once a month. (Думаю, это не надо.)}
 
 \section*{Conclusion}
 It this paper we briefly described an IT technique for ECG image scans processing and their time series recognition.  The recognition result consists of P, Q, R, S and T section values expressed in qualitative terms, e.g., size, width, and amplitude.  The results will be used as fact data for expert system of structural analysis and interpretation in medical cardiological domains (ES ECG ``SERG'').  We analyzed 156 ECG images obtained by scanning ECG tapes.  The tapes are taken from archives of a hospital, ambulance brigades, and from patients' personal archives.
@@ -210,7 +217,9 @@ The further development of the technique, its software and their implementation 
 %\bibliographystyle{splncs03}
 %\bibliography{example}
  \begin{thebibliography}{99}
+ \bibitem{11} \nnn{Оформить литературу по правилам конференции.}
  \bibitem{wikipedia} Electrocardiography -- Wikipedia, the free encyclopedia. URL:\url{https://en.wikipedia.org/wiki/Electrocardiogram} (access date: 03.03.2016)
+% !!!!!!!!!!!!!!!!!!! \url is located in \usapackage{hyperref}
 
  \bibitem{rangaraj} Rangaraj M. Rangayyan Biomedical Signal Analysis. A Case-Study Approach. // IEEE Press and Wiley, New York, NY. 2002. 512 pages. ISBN 0-471-20811-6
 
@@ -228,12 +237,9 @@ The further development of the technique, its software and their implementation 
 
  \bibitem{5} Khaled Daqrouq QRS Complex Detection Based on Symmlets Wavwlwt Function / Khaled Daqrouq, Ibrahim N. AbuIsbeih, Abdel-Rahman Al-Qawasmi // 5th International MultiConference on Systems, Signals and Devices – 2008
 
- \bibitem{6} Dubrovin V. I., Tverdohleb J. V., Kharchenko V. V. R-peaks detection using wavelet Technology // Радіоелектроніка, інформатика, управління . 2013. No.~2 (29). URL:\url{http://cyberleninka.ru/article/n/r-peaks-detection-using-wavelet-technology} (access date: 17.03.2016)
+ \bibitem{6} Dubrovin V. I., Tverdohleb J. V., Kharchenko V. V. R-peaks detection using wavelet Technology // Radioelectronka, informatika, upravlinnya. 2013. No.~2 (29). URL:\url{http://cyberleninka.ru/article/n/r-peaks-detection-using-wavelet-technology} (access date: 17.03.2016)
 
  \bibitem{7} Gritzali F., Frangakis G. and Papakonstantinou G. Detection of the P and T waves in an ECG // Comput. Biomed. Res. – 1976. – V. 9. – P. 125-132
-
- \bibitem{murashko} Мурашко В.В «Электрокардиография» / В.В.Мурашко, А.В.Струтынский – 9-е изд. – М. МЕДпресс-информ, 2008 – 320 с. ил
-
  \end{thebibliography}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
