@@ -163,3 +163,6 @@ auto/
 *.pdf
 
 /a.py
+
+# Reserv-file from documents
+~*.doc
