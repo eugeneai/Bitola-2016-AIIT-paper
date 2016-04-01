@@ -1,22 +1,22 @@
 \documentclass[runningheads]{AIIT}
-\usepackage[utf8]{inputenc}
-\usepackage[russian]{babel}
+%\usepackage[utf8]{inputenc}
+%\usepackage[russian]{babel}
 \usepackage{graphicx}
 \usepackage{hyperref}
 
 %---------- BEGIN May be removed ------------------
-\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
-\definecolor{rclr}{rgb}{0.5,0.1,0.1}
-\definecolor{eclr}{rgb}{0,0.5,0.5}
-\colorlet{acolor}{blue}
-\colorlet{rcolor}{red}
-\definecolor{ncolor}{rgb}{0.5,0.5,0.1}
-\newcommand{\aaa}[2][acolor]{\noindent\textcolor{eclr}%
-{+\ [}\textcolor{#1}{#2}\textcolor{eclr}{]}}
-\newcommand{\rrr}[2][rcolor]{\noindent%
-\textcolor{eclr}{-\ [}\textcolor{#1}{#2}\textcolor{eclr}{]}}
-\newcommand{\nnn}[2][rcolor]{\noindent%
-\textcolor{eclr}{}\textcolor{#1}{#2}\textcolor{eclr}{}}
+% \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+% \definecolor{rclr}{rgb}{0.5,0.1,0.1}
+% \definecolor{eclr}{rgb}{0,0.5,0.5}
+% \colorlet{acolor}{blue}
+% \colorlet{rcolor}{red}
+% \definecolor{ncolor}{rgb}{0.5,0.5,0.1}
+% \newcommand{\aaa}[2][acolor]{\noindent\textcolor{eclr}%
+% {+\ [}\textcolor{#1}{#2}\textcolor{eclr}{]}}
+% \newcommand{\rrr}[2][rcolor]{\noindent%
+% \textcolor{eclr}{-\ [}\textcolor{#1}{#2}\textcolor{eclr}{]}}
+% \newcommand{\nnn}[2][rcolor]{\noindent%
+% \textcolor{eclr}{}\textcolor{#1}{#2}\textcolor{eclr}{}}
 %---------- END May be removed ------------------
 
 \hypersetup{
@@ -62,7 +62,8 @@
 Lermontov str. 83, Irkutsk, 664074, Russian Federation\\
   \email{kristina.kras1993@gmail.com}
   \and
-Institute of System Dynamics and Control Theory at Siberian Branch of Russian Academy of Sciences,\\
+Matrosov Institute for System Dynamics and Control Theory of\\
+Siberian Branch of Russian Academy of Sciences,\\
 Lermontov str. 134, Irkutsk, 664033, Russian Federation\\
   \email{eugeneai@icc.ru}
   \and
@@ -89,9 +90,9 @@ The automatic processing and analysis of the ECG will reduce human factor impact
 
 The computational ECG processing has already more than fifteen years.  But it seems that there are no industry standards of data representation and processing pipelines of the EGC images as well as complete set of methods, data formats, IT tools and techniques for implementation of each stage of the pipeline.  The ECG image processing problem is classified as artificial intelligence recognition task with the lack and data distortion.
 
-In Russian Federation, system ``Valenta'' is a popular software tool for ECG data analysis obtained from its instrument.  The program does not allow processing data from other sources such as scanned tape images and time series obtained from other appliances.  Monitor control systems, e.g., arrhythmia monitor system Argus, require special equipment.  Professor MD V.~M.~Uspensky suggested new diagnostic method that allows expert to diagnose a wide range of deceases of internal organs by describing a ECG.  The method does not allow one to diagnose an essential set of hearth deceases causing arrhythmia that has 8\% of all the cases in last three years.  The analytic systems do not support importing raster graphics of scanned images of ECG printed on a paper --- still the most popular media.  Digitizing such sources and extraction of time series allow us to organize automated diagnostic environments on the base of electronic medical records (EMR). \nnn{Надо расставить ссылки на источники.}
+In Russian Federation, system ``Valenta'' is a popular software tool for ECG data analysis obtained from its instrument.  The program does not allow processing data from other sources such as scanned tape images and time series obtained from other appliances.  Monitor control systems, e.g., arrhythmia monitor system Argus, require special equipment.  Professor MD V.~M.~Uspensky suggested new diagnostic method that allows expert to diagnose a wide range of deceases of internal organs by describing a ECG.  The method does not allow one to diagnose an essential set of hearth deceases causing arrhythmia that has 8\% of all the cases in last three years.  The analytic systems do not support importing raster graphics of scanned images of ECG printed on a paper --- still the most popular media.  Digitizing such sources and extraction of time series allow us to organize automated diagnostic environments on the base of electronic medical records (EMR).
 
-In this investigation we develop an IT technique and software, which will process and analyze ECG raster images obtained in cardiologist's offices, from medical organizations and medical histories. \nnn{Надо дописать, что хотим получить: временные ряды, оценки размеро пиков, интерпретации ECG.}
+In this investigation we develop an IT technique and software, which will process and analyze ECG raster images obtained in cardiologist's offices, from medical organizations and medical histories.  The aim of the investigation is to develop software allowing cardiologists to watch the dynamics as an ECG evolution in time.  To achieve so we need to digitize ECG time series, filter parasite distortions (low and high frequency), straighten bases, and measure signal relative entities sizes in \% to the reference ones.  Another problem is automatic interpretation of an ECG as a result of signal form analysis.  The automatic analysis as a pedantic and formal procedure will rise the probability to mention, e.g., such as atrial fibrillation, and lower human factor in decision making.
 
 
 \section{Structire of ECG}
@@ -139,7 +140,7 @@ The algorithm did not produce results on all the test given.  Ten out of 156 ECG
 \begin{figure}[htb]
   \centering
     \includegraphics[width=0.5\linewidth] {images/Algorithm.jpg}
-  \caption{Time series recognition algorithm stages}
+  \caption{Algorithm stages of time series recognition}
   \label{fig:leads-ex}
 \end{figure}
 
@@ -162,7 +163,7 @@ If the real time mode is not required we use filtering in the frequency space.  
 \subsection{QRS complex detection}
 \label{sec:qrs-compl-detect}
 
-The QRS complex detection is usually based on locating R pike with the following removal of the whole QRS complex from the ECG time series.  The R location can be obtained by means of various methods, e.g., based on the derivative \cite{Ahlstrom-Tomhins}, sliding mean filer, weighted and squared operators of the first derivative \cite{Murthy-Rangaraj}, detection algorithm of Pan-Tompkins \cite{Pan-Tomhins}.  For PQRST complex detection, there are discrete wavelet transformation based algorithms \cite{Daqrouq, Dubrovin}, and duration transformation \cite{Gritzali}.
+The QRS complex detection is usually based on locating R pike with the following removal of the whole QRS complex from the ECG time series.  The R location can be obtained by means of various methods, e.g., based on the derivative \cite{Ahlstrom-Tomhins}, sliding mean filer, weighted and squared operators of the first derivative \cite{Murthy-Rangaraj}, detection algorithm of Pan-Tompkins \cite{Pan-Tomhins}.  For PQRST complex detection, there are discrete wavelet transformation based algorithms \cite{Daqrouq,Dubrovin}, and duration transformation \cite{Gritzali}.
 
 In this project we used discrete wavelet transformation method as it can determine pikes in the signals with base line drift distortion.  The previously recognized time series are loaded from a file and 4th degree wavelet decomposition is computed over the loaded data (Fig.~\ref{fig:decomp}, the source signal is decomposed with Daubechies wavelet.
 
@@ -197,12 +198,10 @@ The determined maximal values positions are also filtered according to pike aver
   \label{fig:fig7}
 \end{figure}
 
-\section{Applications}
+\section{Usage the digitized time series of leads}
 \label{sec:applications}
 
-\nnn{Написать, как использовалосьб программное обеспечение в процессе решения задач ниже.}
-
-A comparative dynamics analysis of EGC of abnormal hearth rhythms in form of various arrhythmia and conduction disorder has been carried on during patient observations of primary manifestations of undesirable side effects on the months-long anti-tuberculosis chemotherapy.  The abnormalities are as follows (with the number of observations): the rhythm of the right atrium (18 cases), atrioventricular block I st. (7 cases), full blockade of the left His'  leg bundle (2 cases), Brugad syndrome (7 cases), sick sinus syndrome (1 case), pacemaker migration on the atria (2 cases), pacemaker migration on the atria (10 cases), lengthening the interval Q--T (1 case), shortening of P--Q interval --- syndrome premature ventricular heart Сlerk-Levi-Cristesco (CLC) (12 cases), atal syndrome of premature ventricular Wolff-Parkinson-White (WPW), type "B" (1 case), acute myocardial infarction with the formation of pathological wave the Q (3 cases), acute myocardial infarction without pike Q (-) but with the rise of segment S-T (3 cases), sinus tachycardia (4 cases), isolated syndrome early ventricular repolarization (4 cases).
+A comparative dynamics analysis of EGC of abnormal hearth rhythms in form of various arrhythmia and conduction disorder has been carried on during patient observations of primary manifestations of undesirable side effects on the months-long anti-tuberculosis chemotherapy.  The abnormalities are as follows (with the number of observations): the rhythm of the right atrium (18 cases), atrioventricular block I st. (7 cases), full blockade of the left His'  leg bundle (2 cases), Brugad syndrome (7 cases), sick sinus syndrome (1 case), pacemaker migration on the atria (2 cases), pacemaker migration on the atria (10 cases), lengthening the interval Q--T (1 case), shortening of P--Q interval --- syndrome premature ventricular heart Сlerk-Levi-Cristesco (CLC) (12 cases), atal syndrome of premature ventricular Wolff-Parkinson-White (WPW), type ``B'' (1 case), acute myocardial infarction with the formation of pathological wave the Q (3 cases), acute myocardial infarction without pike Q (-) but with the rise of segment S-T (3 cases), sinus tachycardia (4 cases), isolated syndrome early ventricular repolarization (4 cases).
 
 
 \section*{Conclusion}
@@ -217,29 +216,27 @@ The further development of the technique, its software and their implementation 
 %\bibliographystyle{splncs03}
 %\bibliography{example}
  \begin{thebibliography}{99}
- \bibitem{11} \nnn{Оформить литературу по правилам конференции.}
- \bibitem{wikipedia} Electrocardiography -- Wikipedia, the free encyclopedia. URL:\url{https://en.wikipedia.org/wiki/Electrocardiogram} (access date: 03.03.2016)
+ \bibitem{wikipedia} Electrocardiography -- Wikipedia, the free encyclopedia, [Online].  Available:\url{https://en.wikipedia.org/wiki/Electrocardiogram} (current March 2016)
 % !!!!!!!!!!!!!!!!!!! \url is located in \usapackage{hyperref}
 
- \bibitem{rangaraj} Rangaraj M. Rangayyan Biomedical Signal Analysis. A Case-Study Approach. // IEEE Press and Wiley, New York, NY. 2002. 512 pages. ISBN 0-471-20811-6
+ \bibitem{rangaraj} Rangaraj, M.R.: Biomedical Signal Analysis. A Case-Study Approach. IEEE Press and Wiley, New York, NY. (2002). ISBN 0-471-20811-6
 
- \bibitem{1} Gonzalez, R.C., Woods, R.E., Eddins, S.L. Digital Image Processing Using MATLAB, 2nd ed. Gatesmark Publishing. 2009. 827~p.
+ \bibitem{1} Gonzalez, R.C., Woods, R.E., Eddins, S.L.: Digital Image Processing Using MATLAB, 2nd ed. Gatesmark Publishing. (2009)
 
- \bibitem{gonseles} Gonsalez R.C. and Woods R.E. Digital Image Processing / Reading, MA: Addison-Wesley, 1992
+ \bibitem{gonseles} Gonsalez, R.C., Woods, R.E.: Digital Image Processing. MA: Addison-Wesley. (1992)
 
- \bibitem{Ahlstrom-Tomhins} Ahlstrom M.L. and Tomhins W.J. Digital filters for real-time ECG signal processing using microprocessors // IEEE Trans. Biomed. Eng. – 1985. – V. 32. – P. 708-713.
+ \bibitem{Ahlstrom-Tomhins} Ahlstrom, M.L., Tomhins, W.J.: Digital filters for real-time ECG signal processing using microprocessors. IEEE Trans. Biomed. Eng. vol.~32. pp.~708--713~(1985)
 
- \bibitem{Murthy-Rangaraj} Murthy I.S.N. and Rangaraj M.R. New concepts for PVC detection // IEEE Trans. Biomed. Eng. – 1979. – V. 26, No. 7. – P. 409-416.
+ \bibitem{Murthy-Rangaraj} Murthy, I.S.N., Rangaraj, M.R.: New concepts for PVC detection. IEEE Trans. Biomed. Eng. vol.~26,~7 pp.~409--416~(1979)
 
- \bibitem{murthy} Gritzali F., Frangakis G. and Papakonstantinou G. Detection of the P and T waves in an ECG // Comput. Biomed. Res. – 1976. – V. 9. – P. 125-132
+ \bibitem{Gritzali} Gritzali, F., Frangakis, G., Papakonstantinou G.: Detection of the P and T waves in an ECG // Comput. Biomed. Res. vol.~9. pp.~125--132~(1976)
 
- \bibitem{Pan-Tomhins} Pan J. and Tomhins W.J. A real-time QRS detection algorithm // IEEE Trans. Biomed. Eng. – 1985. – V. 32. – P. 230-236.
+ \bibitem{Pan-Tomhins} Pan, J., Tomhins, W.J.: A real-time QRS detection algorithm. IEEE Trans. Biomed. Eng. vol.~32. pp.~230-236~(1985)
 
- \bibitem{Daqrouq} Khaled Daqrouq QRS Complex Detection Based on Symmlets Wavwlwt Function / Khaled Daqrouq, Ibrahim N. AbuIsbeih, Abdel-Rahman Al-Qawasmi // 5th International MultiConference on Systems, Signals and Devices – 2008
+ \bibitem{Daqrouq} Khaled, D., Ibrahim, N.A., Abdel-Rahman, Al-Q.: QRS Complex Detection Based on Symmlets Wavwlwt Function. In: 5th International MultiConference on Systems, Signals and Devices~(2008)
 
- \bibitem{Dubrovin} Dubrovin V. I., Tverdohleb J. V., Kharchenko V. V. R-peaks detection using wavelet Technology // Radioelectronka, informatika, upravlinnya. 2013. No.~2 (29). URL:\url{http://cyberleninka.ru/article/n/r-peaks-detection-using-wavelet-technology} (access date: 17.03.2016)
+ \bibitem{Dubrovin} Dubrovin, V.I., Tverdohleb, J.V., Kharchenko, V.V.: R-peaks detection using wavelet Technology. Radioelectronka, informatika, upravlinnya. 2(29)~(2013), [Online].  Available:\url{http://cyberleninka.ru/article/n/r-peaks-detection-using-wavelet-technology} (current~March~2016)
 
- \bibitem{Gritzali} Gritzali F., Frangakis G. and Papakonstantinou G. Detection of the P and T waves in an ECG // Comput. Biomed. Res. – 1976. – V. 9. – P. 125-132
  \end{thebibliography}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
