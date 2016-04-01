@@ -86,19 +86,19 @@ Medical images are popular objects of automatic analysis.  An image of an electr
 
 In order to improve the quality and accessibility of medical cardiology provision for the population, Ministry of Health of Russian Federation started to elaborate of a law project aimed at a legal basis construction of IT infrastructure for public health protection.  The infrastructure will be based on remote interaction of medical professionals and patients.  At present the interaction (such as remote consultations) is out of professional moderation and provided via forums, specialized internet sites and Skype.  The cardiological data is supplied as attached photographic as scanned images.  The final conclusions made in the environment are of question.
 
-The automatic processing and analysis of the ECG will reduce human factor impact on the final conclusion since automatic processing results are not affected by the degree of fatigue, observation time, and body physical condition of the physician.  Moreover the results produced by human expert are usually intuitive, expressed in quality statements, and the reasoning process can be hardly represented as explicit elementary stages (as an algorithm).  For example, expert estimates the width of PQ interval to be shorter as compared to one described in the literature, in addition, the subjective estimation varies among specialists. \cite{rangaraj}  Computer processing and analysis is significantly formalized and operates by qualitative values.
+The automatic processing and analysis of the ECG will reduce human factor impact on the final conclusion since automatic processing results are not affected by the degree of fatigue, observation time, and body physical condition of the physician.  Moreover the results produced by human expert are usually intuitive, expressed in quality statements, and the reasoning process can be hardly represented as explicit elementary stages (as an algorithm).  For example, expert estimates the width of PQ interval to be shorter as compared to one described in the literature, in addition, the subjective estimation varies among specialists \cite{rangaraj}. Computer processing and analysis is significantly formalized and operates by qualitative values.
 
 The computational ECG processing has already more than fifteen years.  But it seems that there are no industry standards of data representation and processing pipelines of the EGC images as well as complete set of methods, data formats, IT tools and techniques for implementation of each stage of the pipeline.  The ECG image processing problem is classified as artificial intelligence recognition task with the lack and data distortion.
 
-In Russian Federation, system ``Valenta'' is a popular software tool for ECG data analysis obtained from its instrument.  The program does not allow processing data from other sources such as scanned tape images and time series obtained from other appliances.  Monitor control systems, e.g., arrhythmia monitor system Argus, require special equipment.  Professor MD V.~M.~Uspensky suggested new diagnostic method that allows expert to diagnose a wide range of deceases of internal organs by describing a ECG.  The method does not allow one to diagnose an essential set of hearth deceases causing arrhythmia that has 8\% of all the cases in last three years.  The analytic systems do not support importing raster graphics of scanned images of ECG printed on a paper --- still the most popular media.  Digitizing such sources and extraction of time series allow us to organize automated diagnostic environments on the base of electronic medical records (EMR).
+Among the existing ECG processing software made in Russian Federation we emphasize system ``Valenta'' as a popular software tool for ECG data analysis obtained from its instrument.  The program does not allow processing data from other sources such as scanned tape images and time series obtained from other appliances.  Monitor control systems, e.g., arrhythmia monitor system ``Argus'', require special equipment.  Professor MD V.~M.~Uspensky suggested new diagnostic method that allows expert to diagnose a wide range of deceases of internal organs by describing a ECG.  The method does not allow one to diagnose an essential set of hearth deceases causing arrhythmia that has 8\% of all the cases in last three years.  The analytic systems do not support importing raster graphics of scanned images of ECG printed on a paper --- still the most popular media.  Digitizing such sources and extraction of time series allow us to organize automated diagnostic environments on the base of electronic medical records.
 
-In this investigation we develop an IT technique and software, which will process and analyze ECG raster images obtained in cardiologist's offices, from medical organizations and medical histories.  The aim of the investigation is to develop software allowing cardiologists to watch the dynamics as an ECG evolution in time.  To achieve so we need to digitize ECG time series, filter parasite distortions (low and high frequency), straighten bases, and measure signal relative entities sizes in \% to the reference ones.  Another problem is automatic interpretation of an ECG as a result of signal form analysis.  The automatic analysis as a pedantic and formal procedure will rise the probability to mention, e.g., such as atrial fibrillation, and lower human factor in decision making.
+In this investigation we develop an IT technique and software, which will process and analyze ECG raster images obtained in cardiologist's offices, medical organizations and from medical histories.  The aim of the investigation is to develop software allowing cardiologists to watch the dynamics as an ECG evolution in time.  To achieve so we need to digitize ECG time series, filter parasite distortions (low and high frequency), straighten the signal base, and measure signal relative entity sizes in \% to the reference ones.  Another problem is automatic interpretation of an ECG as a result of signal form analysis.  The automatic analysis as a pedantic and formal procedure will rise the probability to mention, e.g., atrial fibrillation, and lower human factor in decision making.
 
 
 \section{Structire of ECG}
 \label{sec:structire-ecg}
 
-\emph{Electrocardiogram} (ECG) is a graphical representation (a time series records) of impulse conduction on the nodes and bundles of the cardiac conduction system of heart.  ECG is recorded as a number of \emph{electrical entities} \cite{wikipedia} (\emph{pikes} made of rising and drooping, and \emph{horizontal segments}).  Pike entities are denoted by letters P, Q, R, S and T, whereas horizontal segments are denoted by PR segment and ST segment.
+\emph{Electrocardiogram} (ECG) is a graphical representation (a time series records) of impulse conduction on the nodes and bundles of the cardiac conduction system of heart.  ECG is recorded as a number of \emph{electrical entities} (\emph{pikes} made of rising and drooping, and \emph{horizontal segments}) \cite{wikipedia}.  Pike entities are denoted by letters P, Q, R, S and T, whereas horizontal segments are denoted by PR segment and ST segment.
 
 Each ECG analysis is started from verification of the registration process.  The registration of hearth electric field potential, named as \emph{lead}, is measured between two placements of the chest surface.  The standard ECG consists of twelve leads (vectors): three 2-pole (3 standard leads), three 1-pole reinforced limb leads, six 1-pole chest leads.
 
@@ -116,7 +116,7 @@ Each ECG analysis is started from verification of the registration process.  The
 \label{sec:digit-recogn}
 
 % Time series digitizing
-The first stage of the ECG image processing is recognition of the time series if the leads.  The source image scan consists of tracing paper background with square grid and lines of time series.  Time series include a reference pulse at the beginning (Fig.~\ref{fig:leads-ex}).  The processing of the image can be done with various techniques.  We started directly from the application of edge tracing algorithms and obtained the results like ones depicted in Fig.~\ref{fig:sobel-ex}.
+The first stage of the ECG image processing is a recognition of the time series if the leads.  The source image scan consists of tracing paper background with square grid and lines of time series.  Time series include a reference pulse at the beginning (Fig.~\ref{fig:leads-ex}).  The processing of the image can be done with various techniques.  We started directly from the application of edge tracing algorithms and obtained the results like ones depicted in Fig.~\ref{fig:sobel-ex}.
 
 \begin{figure}[htb]
   \centering
@@ -125,7 +125,7 @@ The first stage of the ECG image processing is recognition of the time series if
   \label{fig:sobel-ex}
 \end{figure}
 
-As the image consists of the combination of the background and signal line, we decided to filter out the background \cite{gonseles}.  The following schema implements the filtering.
+As the image consists of the combination of the background and signal time series, we decided to filter out the background \cite{gonseles,1}.  The following schema implements the filtering.
 \begin{enumerate}
 \item A color channel of the background hue is extracted from the source image.
 \item A red image copy is blurred with Gaussian filter in the red channel.
@@ -165,7 +165,7 @@ If the real time mode is not required we use filtering in the frequency space.  
 
 The QRS complex detection is usually based on locating R pike with the following removal of the whole QRS complex from the ECG time series.  The R location can be obtained by means of various methods, e.g., based on the derivative \cite{Ahlstrom-Tomhins}, sliding mean filer, weighted and squared operators of the first derivative \cite{Murthy-Rangaraj}, detection algorithm of Pan-Tompkins \cite{Pan-Tomhins}.  For PQRST complex detection, there are discrete wavelet transformation based algorithms \cite{Daqrouq,Dubrovin}, and duration transformation \cite{Gritzali}.
 
-In this project we used discrete wavelet transformation method as it can determine pikes in the signals with base line drift distortion.  The previously recognized time series are loaded from a file and 4th degree wavelet decomposition is computed over the loaded data (Fig.~\ref{fig:decomp}, the source signal is decomposed with Daubechies wavelet.
+In this project we used discrete wavelet transformation method as it can determine pikes in the signals with base line drift distortion.  The previously recognized time series are loaded from a file, and 4th degree wavelet decomposition is computed over the loaded data (Fig.~\ref{fig:decomp}), the source signal is decomposed with Daubechies wavelet.
 
 \begin{figure}[htb]
   \centering
@@ -182,7 +182,7 @@ At the next stage the obtained time series analyzed visually by operator (user).
   \caption{R pike determination}
   \label{fig:determ-R}
 \end{figure}
-The determined maximal values positions are also filtered according to pike average distance criterion.  The measured pike amplitude is corrected with respect to the bias of the original signal, then the locations of the rest of the pikes are determined (Fig.\ref{fig:fig6} and \ref{fig:fig7}).
+The determined maximal values positions are also filtered according to pike average distance criterion.  The measured pike amplitude is corrected with respect to the basis of the original signal, then the locations of the rest of the pikes are determined (Fig.\ref{fig:fig6} and \ref{fig:fig7}).
 
 \begin{figure}[htb]
   \centering
@@ -203,11 +203,16 @@ The determined maximal values positions are also filtered according to pike aver
 
 A comparative dynamics analysis of EGC of abnormal hearth rhythms in form of various arrhythmia and conduction disorder has been carried on during patient observations of primary manifestations of undesirable side effects on the months-long anti-tuberculosis chemotherapy.  The abnormalities are as follows (with the number of observations): the rhythm of the right atrium (18 cases), atrioventricular block I st. (7 cases), full blockade of the left His'  leg bundle (2 cases), Brugad syndrome (7 cases), sick sinus syndrome (1 case), pacemaker migration on the atria (2 cases), pacemaker migration on the atria (10 cases), lengthening the interval Q--T (1 case), shortening of P--Q interval --- syndrome premature ventricular heart Сlerk-Levi-Cristesco (CLC) (12 cases), atal syndrome of premature ventricular Wolff-Parkinson-White (WPW), type ``B'' (1 case), acute myocardial infarction with the formation of pathological wave the Q (3 cases), acute myocardial infarction without pike Q (-) but with the rise of segment S-T (3 cases), sinus tachycardia (4 cases), isolated syndrome early ventricular repolarization (4 cases).
 
+\section{Acknowledgment}
+\label{sec:acknowledment}
+
+The research is partially supported by Russian Foundation of Basic Research, grant No.~16-07-00554 ``Development of Method for Object Recognition on Raster Images on the Base of Logical Models with Spatial Constraints''.
+
 
 \section*{Conclusion}
 It this paper we briefly described an IT technique for ECG image scans processing and their time series recognition.  The recognition result consists of P, Q, R, S and T section values expressed in qualitative terms, e.g., size, width, and amplitude.  The results will be used as fact data for expert system of structural analysis and interpretation in medical cardiological domains (ES ECG ``SERG'').  We analyzed 156 ECG images obtained by scanning ECG tapes.  The tapes are taken from archives of a hospital, ambulance brigades, and from patients' personal archives.
 
-For some diagrams obtained in an emergency room and in a department of functional diagnostics, a comparative qualitative analysis of ECG time dynamics and accompanying patients supporting documentation has been carried out.  Functionalist now is able to submit the objective values of amplitudes and time intervals of P, Q, R, S and T pikes and the segments of clinically significant QRS complexes in millimeters and milliseconds and in percent relations to a cardiologist.  This resulted in rising the objectivity of dynamics evaluation with the domain criteria and coefficients, mentioned in manuals and guidelines in cardiology, but still rarely used by practitioners due to a lot of mathematical calculation and analysis to be done previously.
+For some diagrams obtained in an emergency room and in a department of functional diagnostics; a comparative qualitative analysis of ECG time dynamics and accompanying patients supporting documentation has been carried out.  Functionalist now is able to submit the objective values of amplitudes and time intervals of P, Q, R, S and T pikes and the segments of clinically significant QRS complexes in millimeters and milliseconds and in percent relations to a cardiologist.  This resulted in rising the objectivity of dynamics evaluation with the domain criteria and coefficients, mentioned in manuals and guidelines in cardiology, but still rarely used by practitioners due to a lot of mathematical calculation and analysis to be done previously.
 
 Cardiologist carried on an analysis of amplitude dynamics of the amplitudes and the time intervals, and segments parameters, resulting in a safe rational load correction of medicaition dosage for only 2--3 days instead regular 5--6 ones.
 
@@ -216,26 +221,27 @@ The further development of the technique, its software and their implementation 
 %\bibliographystyle{splncs03}
 %\bibliography{example}
  \begin{thebibliography}{99}
- \bibitem{wikipedia} Electrocardiography -- Wikipedia, the free encyclopedia, [Online].  Available:\url{https://en.wikipedia.org/wiki/Electrocardiogram} (current March 2016)
-% !!!!!!!!!!!!!!!!!!! \url is located in \usapackage{hyperref}
 
  \bibitem{rangaraj} Rangaraj, M.R.: Biomedical Signal Analysis. A Case-Study Approach. IEEE Press and Wiley, New York, NY. (2002). ISBN 0-471-20811-6
 
- \bibitem{1} Gonzalez, R.C., Woods, R.E., Eddins, S.L.: Digital Image Processing Using MATLAB, 2nd ed. Gatesmark Publishing. (2009)
+ \bibitem{wikipedia} Electrocardiography -- Wikipedia, the free encyclopedia, [Online].  Available:\url{https://en.wikipedia.org/wiki/Electrocardiogram} (current March 2016)
 
  \bibitem{gonseles} Gonsalez, R.C., Woods, R.E.: Digital Image Processing. MA: Addison-Wesley. (1992)
+
+ \bibitem{1} Gonzalez, R.C., Woods, R.E., Eddins, S.L.: Digital Image Processing Using MATLAB, 2nd ed. Gatesmark Publishing. (2009)
 
  \bibitem{Ahlstrom-Tomhins} Ahlstrom, M.L., Tomhins, W.J.: Digital filters for real-time ECG signal processing using microprocessors. IEEE Trans. Biomed. Eng. vol.~32. pp.~708--713~(1985)
 
  \bibitem{Murthy-Rangaraj} Murthy, I.S.N., Rangaraj, M.R.: New concepts for PVC detection. IEEE Trans. Biomed. Eng. vol.~26,~7 pp.~409--416~(1979)
 
- \bibitem{Gritzali} Gritzali, F., Frangakis, G., Papakonstantinou G.: Detection of the P and T waves in an ECG // Comput. Biomed. Res. vol.~9. pp.~125--132~(1976)
-
  \bibitem{Pan-Tomhins} Pan, J., Tomhins, W.J.: A real-time QRS detection algorithm. IEEE Trans. Biomed. Eng. vol.~32. pp.~230-236~(1985)
 
- \bibitem{Daqrouq} Khaled, D., Ibrahim, N.A., Abdel-Rahman, Al-Q.: QRS Complex Detection Based on Symmlets Wavwlwt Function. In: 5th International MultiConference on Systems, Signals and Devices~(2008)
+ \bibitem{Daqrouq} Khaled, D., Ibrahim, N.A., Abdel-Rahman, Al-Q.: QRS Complex Detection Based on Symmetry Wavelet Function. In: 5th International MultiConference on Systems, Signals and Devices~(2008)
 
  \bibitem{Dubrovin} Dubrovin, V.I., Tverdohleb, J.V., Kharchenko, V.V.: R-peaks detection using wavelet Technology. Radioelectronka, informatika, upravlinnya. 2(29)~(2013), [Online].  Available:\url{http://cyberleninka.ru/article/n/r-peaks-detection-using-wavelet-technology} (current~March~2016)
+
+ \bibitem{Gritzali} Gritzali, F., Frangakis, G., Papakonstantinou G.: Detection of the P and T waves in an ECG // Comput. Biomed. Res. vol.~9. pp.~125--132~(1976)
+
 
  \end{thebibliography}
 
